@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% load widget_tweaks %}
+
+{% block title %}Add New Client{% endblock %}
+
+{% block content %}
+            <h1 class="mt-4">Add New Client</h1>
+
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="row mt-5">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label" for="{{ form.first_name.id_for_label }}">First Name</label>
+                        {% render_field form.first_name class="form-control" aria-label="First Name" placeholder="John" %}
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label" for="{{ form.last_name.id_for_label }}">Last Name</label>
+                        {% render_field form.last_name class="form-control" aria-label="Last Name" placeholder="Doe" %}
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <label class="form-label" for="{{ form.email.id_for_label }}">Email</label>
+                        {% render_field form.email class="form-control" aria-label="Email" placeholder="johndoe@email.com" %}
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label" for="{{ form.username.id_for_label }}">Username</label>
+                        {% render_field form.username class="form-control" aria-label="Username" placeholder="johndoe" %}
+                    </div>
+
+                    <div class="col-md-8 mb-3">
+                        <label class="form-label" for="{{ form.organisation.id_for_label }}">Organisation</label>
+                        {% render_field form.organisation class="form-control" aria-label="Organisation" placeholder="Placeholder Hub..." %}
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="d-grid gap-2 mb-3">
+                    <button class="btn btn-primary" type="submit">Add Client</button>
+                </div>
+            </form>
+{% endblock %}
+

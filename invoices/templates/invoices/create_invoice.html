@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% load widget_tweaks %}
+
+{% load formset_tags %}
+
+{% block title %}Add New Invoice{% endblock %}
+
+{% block content %}
+            <h1 class="mt-4">Create New invoice</h1>
+
+            <form method="post">
+                {% csrf_token %}
+                
+                <div class="row mt-5">
+                    <div class="col mb-3">
+                        <label class="form-label" for="{{ invoice_form.issued_to.id_for_label }}">Issued to</label>
+                        {% render_field invoice_form.issued_to class="form-control" aria-label="Issued to" %}
+                    </div>
+
+                    <div class="col mb-3">
+                        <label class="form-label" for="{{ invoice_form.due_date.id_for_label }}">Due Date</label>
+                        {% render_field invoice_form.due_date class="form-control" type="date" aria-label="Due date" %}
+                    </div>
+                </div>
+
+                <div class="col-12 mb-3">
+                    <label for="form-label" for="{{ invoice_form.notes.id_for_label }}">Notes</label>
+                    {% render_field invoice_form.notes rows="2" class="form-control" %}
+                </div>
+
+                <hr />
+
+                <div id="item_formset" data-formset-prefix="{{ item_formset.prefix }}">
+                    {{ item_formset.management_form }}
+                
+                    <div data-formset-body>
+                        <!-- New forms will be inserted in here -->
+                        {% for form in item_formset %}
+                        <div data-formset-form class="row">
+                            <div class="col-md-7 mb-3">
+                                <label class="form-label" for="{{ form.project.id_for_label }}">Project</label>
+                                {{ form.project }}
+                            </div>
+
+                            <div class="col-md-5 mb-3">
+                                <label class="form-label" for="{{ form.amount.id_for_label }}">Amount</label>
+                                {{ form.amount }}
+                            </div>
+
+                            <div class="col mb-3">
+                                <label class="form-label" for="{{ form.description.id_for_label }}">Description</label>
+                                {{ form.description }}
+                            </div>
+
+                            {% comment %} <button type="button" class="btn btn-danger mb-3" data-formset-delete-button>Delete form</button> {% endcomment %}
+                        </div>
+
+                        <hr />
+                        {% endfor %}
+                    </div>
+                
+                    <!-- The empty form template. By wrapping this in a <script> tag, the
+                    __prefix__ placeholder can easily be replaced in both attributes and
+                    any scripts -->
+                    <script type="form-template" data-formset-empty-form>
+                        {% escapescript %}
+                        {% with form=item_formset.empty_form %}
+                        <div data-formset-form class="row">
+                            <div class="col-md-7 mb-3">
+                                <label class="form-label" for="{{ form.project.id_for_label }}">Project</label>
+                                {{ form.project }}
+                            </div>
+
+                            <div class="col-md-5 mb-3">
+                                <label class="form-label" for="{{ form.amount.id_for_label }}">Amount</label>
+                                {{ form.amount }}
+                            </div>
+
+                            <div class="col mb-3">
+                                <label class="form-label" for="{{ form.description.id_for_label }}">Description</label>
+                                {{ form.description }}
+                            </div>
+
+                            {% comment %} <button type="button" class="btn btn-danger mb-3" data-formset-delete-button>Delete form</button> {% endcomment %}
+                        </div>
+
+                        <hr />
+                        {% endwith %}
+                        {% endescapescript %}
+                    </script>
+                
+                    <!-- This button will add a new form when clicked -->
+                    <button type="button" class="btn btn-secondary mb-3" data-formset-add>
+                        Add Item
+                    </button>
+
+                </div>
+
+                <div class="d-grid gap-2 mb-3">
+                    <button class="btn btn-primary" type="submit">Create Invoice</button>
+                </div>
+            </form>
+{% endblock %}
+
+{% block extra_js %}
+        {{ item_formset.media }}
+
+        <script>
+            jQuery(function($) {
+                $("#item_formset").formset({
+                    animateForms: true
+                });
+            });
+        </script>
+{% endblock %}

@@ -18,6 +18,8 @@ class Invoice(models.Model):
                                     blank=True,
                                     null=True,
                                     help_text="This field is populated by the system and holds the pdf version of the invoice.")
+    class Meta:
+        ordering = ("-invoice_number", )
 
     def __str__(self):
         return self.invoice_number

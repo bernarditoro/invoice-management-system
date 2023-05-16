@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% load widget_tweaks %}
+
+{% block title %}Add New Project{% endblock %}
+
+{% block content %}
+            <h1 class="mt-4">Add New Project</h1>
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="row mt-5">
+                    <div class="col-12 mb-3">
+                        <label class="form-label" for="{{ form.name.id_for_label }}">Name</label>
+                        {% render_field form.name class="form-control" aria-label="Name" placeholder="Hunger Alleviat..." %}
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <label class="form-label" for="{{ form.description.id_for_label }}">Description</label>
+                        {% render_field form.description class="form-control" aria-label="Description" placeholder="A research project to determ..." %}
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <label class="form-label" for="{{ form.project_url.id_for_label }}">Project URL</label>
+                        {% render_field form.project_url class="form-control" aria-label="Project URL" placeholder="https://gith..." %}
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <label class="form-label" for="{{ form.client.id_for_label }}">Client</label>
+                        {% render_field form.client class="form-control" aria-label="Client" %}
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <label class="form-label" for="{{ form.tags.id_for_label }}">Tags</label>
+                        {% render_field form.tags class="form-control" aria-label="Tags" placeholder="hunger, web, ..." %}
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="d-grid gap-2 mb-3">
+                    <button class="btn btn-primary" type="submit">Add Project</button>
+                </div>
+            </form>
+{% endblock %}
+
