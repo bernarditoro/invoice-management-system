@@ -4,10 +4,17 @@
 
 {% load formset_tags %}
 
-{% block title %}Add New Invoice{% endblock %}
+{% block title %}{{ subsection|title }} Invoice{% endblock %}
 
 {% block content %}
-            <h1 class="mt-4">Create New invoice</h1>
+            <h1 class="mt-4">{{ subsection|title }} Invoice</h1>
+
+            {% if form.non_field_errors %}
+            <div class="mt-3 alert alert-error alert-dismissible fade show" role="alert">
+				{{ form.non_field_errors }}
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+            {% endif %}
 
             <form method="post">
                 {% csrf_token %}
@@ -16,17 +23,20 @@
                     <div class="col mb-3">
                         <label class="form-label" for="{{ invoice_form.issued_to.id_for_label }}">Issued to</label>
                         {% render_field invoice_form.issued_to class="form-control" aria-label="Issued to" %}
+                        {% if invoice_form.issued_to.errors %}<small class="form-text text-danger">{{ invoice_form.issued_to.errors }}</small>{% endif %}
                     </div>
 
                     <div class="col mb-3">
                         <label class="form-label" for="{{ invoice_form.due_date.id_for_label }}">Due Date</label>
                         {% render_field invoice_form.due_date class="form-control" type="date" aria-label="Due date" %}
+                        {% if invoice_form.due_date.errors %}<small class="form-text text-danger">{{ invoice_form.due_date.errors }}</small>{% endif %}
                     </div>
                 </div>
 
                 <div class="col-12 mb-3">
                     <label for="form-label" for="{{ invoice_form.notes.id_for_label }}">Notes</label>
                     {% render_field invoice_form.notes rows="2" class="form-control" %}
+                    {% if invoice_form.notes.errors %}<small class="form-text text-danger">{{ invoice_form.notes.errors }}</small>{% endif %}
                 </div>
 
                 <hr />
@@ -41,17 +51,22 @@
                             <div class="col-md-7 mb-3">
                                 <label class="form-label" for="{{ form.project.id_for_label }}">Project</label>
                                 {{ form.project }}
+                                {% if form.project.errors %}<small class="form-text text-danger">{{ form.project.errors }}</small>{% endif %}
                             </div>
 
                             <div class="col-md-5 mb-3">
                                 <label class="form-label" for="{{ form.amount.id_for_label }}">Amount</label>
                                 {{ form.amount }}
+                                {% if form.amount.errors %}<small class="form-text text-danger">{{ form.amount.errors }}</small>{% endif %}
                             </div>
 
                             <div class="col mb-3">
                                 <label class="form-label" for="{{ form.description.id_for_label }}">Description</label>
                                 {{ form.description }}
+                                {% if form.description.errors %}<small class="form-text text-danger">{{ form.description.errors }}</small>{% endif %}
                             </div>
+
+                            {{ form.id }}
 
                             {% comment %} <button type="button" class="btn btn-danger mb-3" data-formset-delete-button>Delete form</button> {% endcomment %}
                         </div>
@@ -70,17 +85,22 @@
                             <div class="col-md-7 mb-3">
                                 <label class="form-label" for="{{ form.project.id_for_label }}">Project</label>
                                 {{ form.project }}
+                                {% if form.project.errors %}<small class="form-text text-danger">{{ form.project.errors }}</small>{% endif %}
                             </div>
 
                             <div class="col-md-5 mb-3">
                                 <label class="form-label" for="{{ form.amount.id_for_label }}">Amount</label>
                                 {{ form.amount }}
+                                {% if form.amount.errors %}<small class="form-text text-danger">{{ form.amount.errors }}</small>{% endif %}
                             </div>
 
                             <div class="col mb-3">
                                 <label class="form-label" for="{{ form.description.id_for_label }}">Description</label>
                                 {{ form.description }}
+                                {% if form.description.errors %}<small class="form-text text-danger">{{ form.description.errors }}</small>{% endif %}
                             </div>
+
+                            {{ form.id }}
 
                             {% comment %} <button type="button" class="btn btn-danger mb-3" data-formset-delete-button>Delete form</button> {% endcomment %}
                         </div>
@@ -98,7 +118,7 @@
                 </div>
 
                 <div class="d-grid gap-2 mb-3">
-                    <button class="btn btn-primary" type="submit">Create Invoice</button>
+                    <button class="btn btn-primary" type="submit">{{ subsection|title }} Invoice</button>
                 </div>
             </form>
 {% endblock %}

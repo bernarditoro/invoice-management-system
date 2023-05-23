@@ -19,6 +19,7 @@
                         <th scope="col">Status</th>
                         <th scope="col">Date Created</th>
                         <th scope="col"></th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
 
@@ -28,9 +29,10 @@
                         <td>{{ invoice.invoice_number }}</td>
                         <td><a href="#">{{ invoice.issued_to.get_full_name }}</a></td>
                         <td>{{ invoice.due_date }}</td>
-                        <td><span class="badge text-bg-{% if invoice.is_paid %}success{% else %}warning{% endif %}">{% if invoice.is_paid %}Paid{% else %}Not paid{% endif %}</span></td>
+                        <td>{% if invoice.is_paid %}Paid{% else %}Not Paid{% endif %}</td>
                         <td>{{ invoice.date_created }}</td>
                         <td><a href="{{ invoice.get_absolute_url }}" class="more">Details</a></td>
+                        <td><a href="{{ invoice.get_update_url }}" class="more">Update</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>

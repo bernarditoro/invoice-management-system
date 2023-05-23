@@ -30,4 +30,9 @@ class InvoiceItemForm(forms.ModelForm):
 
 class InvoiceItemFormset(BaseModelFormSet):
     ...
+
+
+class InvoiceMailForm(forms.Form):
+    recipient_mail = forms.EmailField()
+    message = forms.CharField()
     

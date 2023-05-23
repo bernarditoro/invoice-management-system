@@ -9,5 +9,6 @@ app_name = "invoices"
 urlpatterns = [
     path("", views.InvoiceListView.as_view(), name="invoice_list"),
     path("create-new/", views.InvoiceCreateView.as_view(), name="create_invoice"),
-    path("<invoice_number>/", TemplateView.as_view(template_name="invoices/invoice_detail.html")),
+    path("update/<invoice_number>/", views.InvoiceUpdateView.as_view(), name="update_invoice"),
+    path("<invoice_number>/", views.InvoiceDetailView.as_view(), name="invoice_detail"),
 ]
