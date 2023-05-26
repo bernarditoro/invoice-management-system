@@ -159,5 +159,6 @@ class InvoiceUpdateView(InvoiceCreateView):
     def get_context_data(self, **kwargs):
         context =  super().get_context_data(**kwargs)    
         context["subsection"] = "Update"
+        context["invoice"] = self.get_invoice()
         
         return context

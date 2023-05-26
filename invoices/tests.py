@@ -26,9 +26,18 @@ class BaseInvoiceTestCase(TestCase):
             description="This is a third test project",
         )
 
+        self.client_user = get_user_model().objects.create(
+            email="client@email.com",
+            username="testclient",
+            first_name="Test",
+            last_name="Client",
+            is_client=True
+        )
+
         self.invoice = Invoice.objects.create(
             due_date=date.today(),
-            notes="This is a test invoice note."
+            notes="This is a test invoice note.",
+            issued_to=self.client_user
         )
 
         self.invoice_item_1 = self.invoice.items.create(
@@ -42,8 +51,6 @@ class BaseInvoiceTestCase(TestCase):
             amount=5000,
             description="This is a test invoice item description for item 2"
         )
-
-        self.invoice.generate_invoice_file()
 
         self.client = Client()
 
@@ -63,16 +70,6 @@ class InvoiceModelTestCase(BaseInvoiceTestCase):
 class InvoiceURLTestCase(BaseInvoiceTestCase):
     def setUp(self):
         super().setUp()
-
-        self.client_user = get_user_model().objects.create(
-            email="client@email.com",
-            username="testclient",
-            first_name="Test",
-            last_name="Client",
-            is_client=True
-        )
-
-        self.client = Client()
 
     def test_invoice_list_url(self):
         response = self.client.get("/invoices/")

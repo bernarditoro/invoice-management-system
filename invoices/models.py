@@ -47,8 +47,11 @@ class Invoice(models.Model):
         paid_amount = sum(payment.get_payment_amount() for payment in payments)
 
         return self.get_total_amount() - paid_amount
-    
+        
     def generate_invoice_file(self):
+        if self.invoice_file:
+            self.invoice_file.delete()
+
         context = {
             "invoice": self,
             "invoice_items": self.items.all(),
@@ -56,8 +59,8 @@ class Invoice(models.Model):
 
         pdf_file = generate_pdf("invoices/invoice_detail.html", context)
 
-        self.invoice_file = SimpleUploadedFile('Invoice-' + self.invoice_number + '.pdf', pdf_file,
-                                               content_type='application/pdf')
+        self.invoice_file = SimpleUploadedFile("Invoice-" + self.invoice_number + ".pdf", pdf_file,
+                                               content_type="application/pdf")
         self.save()
 
         return self.invoice_file
@@ -70,7 +73,7 @@ class Invoice(models.Model):
                      subject: str = "",
                      message: str = "",
                      to_email: str = ""):
-        invoice_pdf_path = self.get_invoice_file().path
+        invoice_pdf_path = self.generate_invoice_file().path
         subject = subject or f"Invoice Available [Invoice {self.invoice_number}]"
         message = message or f"""Dear {self.issued_to.first_name}, \n
 

@@ -212,22 +212,28 @@
                             </div>
                         </div>
 
-                        {% if user.is_staff %}
+                        {% comment %}
                         <a href="{% url 'invoices:update_invoice' invoice.invoice_number %}" class="btn btn-dark btn-lg card-footer-btn justify-content-center text-uppercase-bold-sm hover-lift-light">
                             Edit Invoice
                         </a>
-                        {% elif invoice.is_paid %}
+                        {% endcomment %}
+
                         <button type="button" class="btn btn-dark btn-lg card-footer-btn justify-content-center text-uppercase-bold-sm hover-lift-light" data-bs-toggle="modal" data-bs-target="#sendInvoiceByMail">
                             Send Invoice to Email
                         </button>
-                        {% else %}
+
+                        {% comment %}
                         <button type="button" onclick="payWithPayStack()" class="btn btn-dark btn-lg card-footer-btn justify-content-center text-uppercase-bold-sm hover-lift-light">
                             <span class="svg-icon text-white me-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><title>ionicons-v5-g</title><path d="M336,208V113a80,80,0,0,0-160,0v95" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"></path><rect x="96" y="208" width="320" height="272" rx="48" ry="48" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"></rect></svg>
                             </span>
                             Pay Now
                         </button>
-                        {% endif %}
+                        {% endcomment %}
+
+                        {% comment %}
+                            Comment and uncomment buttons/links to reveal different functions
+                        {% endcomment %}
                     </div>
                 </div>
             </div>
